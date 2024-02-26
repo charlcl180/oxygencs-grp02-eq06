@@ -2,6 +2,7 @@ from signalrcore.hub_connection_builder import HubConnectionBuilder
 import logging
 import requests
 import json
+import os
 import time
 
 
@@ -11,10 +12,10 @@ class App:
         self.TICKS = 10
 
         # To be configured by your team
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
+        self.HOST = "http://159.203.50.162" # Setup your host here
+        self.TOKEN = "9730b385b193edd1e758"  # Setup your token here
+        self.T_MAX = 60  # Setup your max temperature here
+        self.T_MIN = 40  # Setup your min temperature here
         self.DATABASE_URL = None  # Setup your database here
 
     def __del__(self):
