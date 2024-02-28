@@ -80,13 +80,16 @@ class App:
     def save_event_to_database(self, timestamp, temperature):
         """Save sensor data into database."""
         
-        conn = psycopg2.connect(database="157.230.69.113",
-                            host="db02eq06",
-                            user="user02eq06",
+        print("SENDING TO DATABASE")
+
+        conn = psycopg2.connect(database="db02eq6",
+                            host="157.230.69.113",
+                            user="user02eq6",
                             password="hh11IRZulzXFkPiU",
                             port="5432")
+
         try:
-            print("SENDING TO DATABASE")
+            print("CONNECT TO DATABASE")
             cur = conn.cursor()
 
             cur.execute("""CREATE TABLE IF NOT EXISTS sensor_data (
@@ -96,8 +99,12 @@ class App:
                         );
                         """)
             
+            print("CREATING TABLE")
+
+            
             cur.execute("INSERT INTO sensor_data (timestamp, temperature) VALUES (%s, %s)",(timestamp, temperature))
-        
+            print("INSERT DATA ")
+
             conn.commit()
 
             cur.close()
