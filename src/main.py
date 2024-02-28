@@ -1,10 +1,10 @@
+import psycopg2
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 import logging
 import requests
 import json
 import os
 import time
-
 
 class App:
     def __init__(self):
@@ -79,11 +79,34 @@ class App:
 
     def save_event_to_database(self, timestamp, temperature):
         """Save sensor data into database."""
+        
+        conn = psycopg2.connect(database="157.230.69.113",
+                            host="db02eq06",
+                            user="user02eq06",
+                            password="hh11IRZulzXFkPiU",
+                            port="5432")
         try:
-            # To implement
+            print("SENDING TO DATABASE")
+            cur = conn.cursor()
+
+            cur.execute("""CREATE TABLE IF NOT EXISTS sensor_data (
+                        id SERIAL PRIMARY KEY,
+                        timestamp VARCHAR (50) NOT NULL,
+                        temperature FLOAT NOT NULL
+                        );
+                        """)
+            
+            cur.execute("INSERT INTO sensor_data (timestamp, temperature) VALUES (%s, %s)",(timestamp, temperature))
+        
+            conn.commit()
+
+            cur.close()
+            conn.close()
+
             pass
         except requests.exceptions.RequestException as e:
             # To implement
+            print(f"Erreur lors de la requête : {e}")
             pass
 
 
