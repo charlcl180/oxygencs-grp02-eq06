@@ -11,7 +11,7 @@ class App:
         self._hub_connection = None
         self.TICKS = 10
 
-        # To be configured by your team
+        # To be configured by your
         self.HOST = "http://159.203.50.162" # Setup your host here
         self.TOKEN = "9730b385b193edd1e758"  # Setup your token here
         self.T_MAX = 60  # Setup your max temperature here
@@ -79,7 +79,7 @@ class App:
 
     def save_event_to_database(self, timestamp, temperature):
         """Save sensor data into database."""
-        
+
         print("SENDING TO DATABASE")
 
         conn = psycopg2.connect(database="db02eq6",
@@ -98,10 +98,10 @@ class App:
                         temperature FLOAT NOT NULL
                         );
                         """)
-            
+
             print("CREATING TABLE")
 
-            
+
             cur.execute("INSERT INTO sensor_data (timestamp, temperature) VALUES (%s, %s)",(timestamp, temperature))
             print("INSERT DATA ")
 
