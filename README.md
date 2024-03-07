@@ -52,3 +52,7 @@ MIT
 ## Contact
 
 For more information, please feel free to contact the repository owner.
+
+## Pre-commit 
+
+
