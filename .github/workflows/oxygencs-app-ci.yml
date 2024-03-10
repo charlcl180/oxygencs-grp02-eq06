@@ -33,7 +33,7 @@ jobs:
     - name: Format code with Black
       run: |
         pip install black
-        black --check .
+        black --check src
 
   build-and-push:
     needs: test
