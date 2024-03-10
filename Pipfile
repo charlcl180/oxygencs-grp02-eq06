@@ -8,7 +8,7 @@ requests = "*"
 signalrcore = "*"
 psycopg2="*"
 pylint="*"
-pre_commit=""*
+pre_commit="*"
 
 [dev-packages]
 
