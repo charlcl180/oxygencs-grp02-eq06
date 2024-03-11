@@ -33,8 +33,9 @@ jobs:
       with:
         python-version: '3.9'
 
-    - name: Install flake8
-      run: pip install flake8
+    - name: Install flake8 and black
+      run: |
+        pip install flake8 black
 
     - name: Run tests
       run: python -m unittest test.test
