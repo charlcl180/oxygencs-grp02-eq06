@@ -108,7 +108,7 @@ class App:
             conn.commit()
 
             cur.close()
-            conn.close()
+            conn.close()       
 
             pass
         except requests.exceptions.RequestException as e:
