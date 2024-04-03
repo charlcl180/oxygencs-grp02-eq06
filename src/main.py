@@ -11,15 +11,19 @@ class App:
         self._hub_connection = None
         self.TICKS = 10
 
-        # To be configured by your
-        self.HOST = "http://159.203.50.162" # Setup your host here
-        self.TOKEN = "9730b385b193edd1e758"  # Setup your token here
-        self.T_MAX = 60  # Setup your max temperature here
-        self.T_MIN = 40  # Setup your min temperature here
-        self.DATABASE_URL = None  # Setup your database here
+        # Configuration via des variables d'environnement
+        self.HOST = os.getenv("HOST", "http://159.203.50.162")
+        self.TOKEN = os.getenv("TOKEN", "9730b385b193edd1e758")
+        self.T_MAX = int(os.getenv("T_MAX", 60))
+        self.T_MIN = int(os.getenv("T_MIN", 40))
+        self.DB_NAME = os.getenv("DB_NAME", "db02eq6")
+        self.DB_HOST = os.getenv("DB_HOST", "157.230.69.113")
+        self.DB_USER = os.getenv("DB_USER", "user02eq6")
+        self.DB_PASSWORD = os.getenv("DB_PASSWORD", "hh11IRZulzXFkPiU")
+        self.DB_PORT = os.getenv("DB_PORT", "5432")
 
     def __del__(self):
-        if self._hub_connection != None:
+        if self._hub_connection:
             self._hub_connection.stop()
 
     def start(self):
@@ -66,9 +70,9 @@ class App:
 
     def take_action(self, temperature):
         """Take action to HVAC depending on current temperature."""
-        if float(temperature) >= float(self.T_MAX):
+        if temperature >= self.T_MAX:
             self.send_action_to_hvac("TurnOnAc")
-        elif float(temperature) <= float(self.T_MIN):
+        elif temperature <= self.T_MIN:
             self.send_action_to_hvac("TurnOnHeater")
 
     def send_action_to_hvac(self, action):
@@ -79,15 +83,13 @@ class App:
 
     def save_event_to_database(self, timestamp, temperature):
         """Save sensor data into database."""
-
         print("SENDING TO DATABASE")
 
-        conn = psycopg2.connect(database="db02eq6",
-                            host="157.230.69.113",
-                            user="user02eq6",
-                            password="hh11IRZulzXFkPiU",
-                            port="5432")
-
+        conn = psycopg2.connect(database=self.DB_NAME,
+                                host=self.DB_HOST,
+                                user=self.DB_USER,
+                                password=self.DB_PASSWORD,
+                                port=self.DB_PORT)
         try:
             print("CONNECT TO DATABASE")
             cur = conn.cursor()
@@ -101,23 +103,17 @@ class App:
 
             print("CREATING TABLE")
 
-
-            cur.execute("INSERT INTO sensor_data (timestamp, temperature) VALUES (%s, %s)",(timestamp, temperature))
-            print("INSERT DATA ")
+            cur.execute("INSERT INTO sensor_data (timestamp, temperature) VALUES (%s, %s)", (timestamp, temperature))
+            print("INSERT DATA")
 
             conn.commit()
 
             cur.close()
-            conn.close()       
-
-            pass
+            conn.close()
+        except psycopg2.Error as e:
+            print(f"Database error: {e}")
         except requests.exceptions.RequestException as e:
-            # To implement
-            print(f"Erreur lors de la requête : {e}")
-            pass
-
-
-
+            print(f"HTTP request error: {e}")
 
 if __name__ == "__main__":
     app = App()
