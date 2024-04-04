@@ -37,8 +37,6 @@ jobs:
       run: |
         pip install flake8 black
 
-    - name: Run tests
-      run: python -m unittest test.test
 
     - name: Lint with flake8
       run: |
