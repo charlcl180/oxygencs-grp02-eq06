@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+data:
+  HOST: "http://159.203.50.162"
+  T_MAX: "60"
+  T_MIN: "40"
+  DB_NAME: "db02eq6"
+  DB_HOST: "157.230.69.113"
+  DB_PORT: "5432"
