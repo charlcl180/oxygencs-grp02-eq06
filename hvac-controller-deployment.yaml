@@ -1,11 +1,11 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hvac-controller
+  name: hvac-controller-deployment
   labels:
     app: hvac
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: hvac
