@@ -82,7 +82,7 @@ jobs:
         run: |
           DEPLOYMENT_NAME=hvac-controller
           IMAGE_NAME=olsenjoseph/oxygencs-app:oxygencs-py
-          NAMESPACE=user02eq06-namespace
+          NAMESPACE=grp02eq06-namespace
 
           kubectl --kubeconfig=$HOME/.kube/config get deployment $DEPLOYMENT_NAME -n $NAMESPACE || kubectl --kubeconfig=$HOME/.kube/config apply -f hvac-controller-deployment.yaml
 
