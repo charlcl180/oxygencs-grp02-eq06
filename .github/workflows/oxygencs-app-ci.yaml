@@ -80,11 +80,11 @@ jobs:
       - name: Deploy to Kubernetes
         if: github.ref == 'refs/heads/main'
         run: |
-          DEPLOYMENT_NAME=oxygencs-app-controller
+          DEPLOYMENT_NAME=hvac-controller
           IMAGE_NAME=olsenjoseph/oxygencs-app:oxygencs-py
-          NAMESPACE=grp02eq06-namespace
+          NAMESPACE=user02eq06-namespace
 
-          kubectl --kubeconfig=$HOME/.kube/config get deployment $DEPLOYMENT_NAME -n $NAMESPACE || kubectl --kubeconfig=$HOME/.kube/config apply -f oxygencs-app-controller-deployment.yaml
+          kubectl --kubeconfig=$HOME/.kube/config get deployment $DEPLOYMENT_NAME -n $NAMESPACE || kubectl --kubeconfig=$HOME/.kube/config apply -f hvac-controller-deployment.yaml
 
           kubectl --kubeconfig=$HOME/.kube/config set image deployment/$DEPLOYMENT_NAME oxygencs-app=$IMAGE_NAME -n $NAMESPACE
 
