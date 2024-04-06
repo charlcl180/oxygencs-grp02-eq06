@@ -70,3 +70,16 @@ jobs:
           tags: |
             olsenjoseph/oxygencs-app:oxygencs-py
             olsenjoseph/oxygencs-app:latest
+
+      - name: Deploy to Kubernetes
+        if: github.ref == 'refs/heads/main'
+        run: |
+          DEPLOYMENT_NAME=oxygencs-app-controller
+          IMAGE_NAME=olsenjoseph/oxygencs-app:oxygencs-py
+          NAMESPACE=grp02eq06-namespace
+
+          kubectl --kubeconfig=$HOME/.kube/config get deployment $DEPLOYMENT_NAME -n $NAMESPACE || kubectl --kubeconfig=$HOME/.kube/config apply -f oxygencs-app-controller-deployment.yaml
+
+          kubectl --kubeconfig=$HOME/.kube/config set image deployment/$DEPLOYMENT_NAME oxygencs-app=$IMAGE_NAME -n $NAMESPACE
+
+          kubectl --kubeconfig=$HOME/.kube/config get pods -l app=$DEPLOYMENT_NAME -n $NAMESPACE
