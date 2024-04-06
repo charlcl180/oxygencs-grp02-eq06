@@ -71,6 +71,12 @@ jobs:
             olsenjoseph/oxygencs-app:oxygencs-py
             olsenjoseph/oxygencs-app:latest
 
+      - name: Set up KUBECONFIG
+        run: |
+          mkdir -p $HOME/.kube
+          cp path/to/kubeconf.yaml $HOME/.kube/config
+        shell: bash
+
       - name: Deploy to Kubernetes
         if: github.ref == 'refs/heads/main'
         run: |
