@@ -74,7 +74,7 @@ jobs:
       - name: Set up KUBECONFIG
         run: |
           mkdir -p $HOME/.kube
-          cp path/to/kubeconf.yaml $HOME/.kube/config
+          cp kubeconf.yaml $HOME/.kube/config
         shell: bash
 
       - name: Deploy to Kubernetes
