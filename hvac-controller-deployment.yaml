@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hvac-controller
+  labels:
+    app: hvac
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: hvac
+  template:
+    metadata:
+      labels:
+        app: hvac
+    spec:
+      containers:
+      - name: hvac-controller
+        image: olsenjoseph/oxygencs-app:oxygencs-py
+        resources:
+          limits:
+            cpu: "1"
+            memory: "512Mi"
+          requests:
+            cpu: "0.5"
+            memory: "256Mi"
+        ports:
+        - containerPort: 8080
