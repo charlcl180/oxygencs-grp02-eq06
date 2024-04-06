@@ -86,6 +86,6 @@ jobs:
 
           kubectl --kubeconfig=$HOME/.kube/config get deployment $DEPLOYMENT_NAME -n $NAMESPACE || kubectl --kubeconfig=$HOME/.kube/config apply -f hvac-controller-deployment.yaml
 
-          kubectl --kubeconfig=$HOME/.kube/config set image deployment/$DEPLOYMENT_NAME oxygencs-app=$IMAGE_NAME -n $NAMESPACE
+          kubectl --kubeconfig=$HOME/.kube/config set image deployment/hvac-controller hvac-controller=$IMAGE_NAME -n $NAMESPACE
 
           kubectl --kubeconfig=$HOME/.kube/config get pods -l app=$DEPLOYMENT_NAME -n $NAMESPACE
