@@ -5,7 +5,7 @@ clusters:
     server: http://146.190.191.28/user02eq06
   name: development
 contexts: null
-current-context: ""
+current-context: do-tor1-log680-k8s-cluster
 kind: Config
 preferences: {}
 users: null
