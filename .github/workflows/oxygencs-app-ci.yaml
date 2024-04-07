@@ -84,8 +84,12 @@ jobs:
           IMAGE_NAME=olsenjoseph/oxygencs-app:oxygencs-py
           NAMESPACE=grp02eq6-namespace
 
-          kubectl --kubeconfig=$HOME/.kube/config get deployment $DEPLOYMENT_NAME -n $NAMESPACE || kubectl --kubeconfig=$HOME/.kube/config apply -f hvac-controller-deployment.yaml
+          if kubectl --kubeconfig=$HOME/.kube/config get deployment $DEPLOYMENT_NAME -n $NAMESPACE &>/dev/null; then
+            kubectl --kubeconfig=$HOME/.kube/config set image deployment/$DEPLOYMENT_NAME hvac-controller=$IMAGE_NAME -n $NAMESPACE
+          else
+            kubectl --kubeconfig=$HOME/.kube/config apply -f hvac-controller-deployment.yaml -n $NAMESPACE
+          fi
 
-          kubectl --kubeconfig=$HOME/.kube/config set image deployment/hvac-controller hvac-controller=$IMAGE_NAME -n $NAMESPACE
+          sleep 30
 
           kubectl --kubeconfig=$HOME/.kube/config get pods -l app=$DEPLOYMENT_NAME -n $NAMESPACE
