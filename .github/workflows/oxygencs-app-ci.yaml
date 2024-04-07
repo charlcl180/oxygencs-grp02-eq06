@@ -92,4 +92,4 @@ jobs:
 
           sleep 30
 
-          kubectl --kubeconfig=$HOME/.kube/config get pods -l app=$DEPLOYMENT_NAME -n $NAMESPACE
+          kubectl --kubeconfig=$HOME/.kube/config get pods -l app=$DEPLOYMENT_NAME -n $NAMESPACE -o wide
