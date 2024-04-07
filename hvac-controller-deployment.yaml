@@ -5,7 +5,7 @@ metadata:
   labels:
     app: hvac
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: hvac
@@ -19,10 +19,10 @@ spec:
         image: olsenjoseph/oxygencs-app:oxygencs-py
         resources:
           limits:
-            cpu: "0.2"
-            memory: "256Mi"
+            cpu: "0.4"
+            memory: "512Mi"
           requests:
             cpu: "0.2"
-            memory: "128Mi"
+            memory: "256Mi"
         ports:
         - containerPort: 8080
