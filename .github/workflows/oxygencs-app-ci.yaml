@@ -37,7 +37,6 @@ jobs:
       run: |
         pip install flake8 black
 
-
     - name: Lint with flake8
       run: |
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --max-complexity=10 --max-line-length=127 --exit-zero
@@ -71,6 +70,10 @@ jobs:
             olsenjoseph/oxygencs-app:oxygencs-py
             olsenjoseph/oxygencs-app:latest
 
+      - name: Extract image name
+        id: extract_image_name
+        run: echo "::set-output name=image_name::olsenjoseph/oxygencs-app:oxygencs-py"
+
       - name: Set up KUBECONFIG
         run: |
           mkdir -p $HOME/.kube
@@ -78,10 +81,9 @@ jobs:
         shell: bash
 
       - name: Deploy to Kubernetes
-        if: github.ref == 'refs/heads/main'
         run: |
           DEPLOYMENT_NAME=hvac-controller
-          IMAGE_NAME=olsenjoseph/oxygencs-app:oxygencs-py
+          IMAGE_NAME=${{ steps.extract_image_name.outputs.image_name }}
           NAMESPACE=grp02eq6-namespace
 
           if kubectl --kubeconfig=$HOME/.kube/config get deployment $DEPLOYMENT_NAME -n $NAMESPACE &>/dev/null; then
@@ -92,4 +94,4 @@ jobs:
 
           sleep 30
 
-          kubectl --kubeconfig=$HOME/.kube/config get pods -l app=$DEPLOYMENT_NAME -n $NAMESPACE -o wide
+          kubectl --kubeconfig=$HOME/.kube/config get pods -l app=$DEPLOYMENT_NAME -n $NAMESPACE
