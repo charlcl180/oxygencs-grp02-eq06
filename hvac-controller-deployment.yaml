@@ -19,10 +19,10 @@ spec:
         image: olsenjoseph/oxygencs-app:oxygencs-py
         resources:
           limits:
-            cpu: "300m"
+            cpu: "800m"
             memory: "128Mi"
           requests:
-            cpu: "100m"
+            cpu: "200m"
             memory: "64Mi"
         ports:
         - containerPort: 8080
